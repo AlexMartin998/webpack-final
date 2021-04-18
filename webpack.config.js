@@ -11,18 +11,6 @@ module.exports = {
     mode: "production",
     module: {
         rules: [
-            // {
-            //     test: /\.jsx?$/i,
-            //     exclude: /node_modules/,
-            //     use: {
-            //         loader: "babel-loader",
-            //     },
-            // },
-            // {
-            //     test: /\.tsx?$/,
-            //     exclude: /node_modules/,
-            //     use: "ts-loader",
-            // },
             {
                 test: /\.html$/i,
                 use: [
@@ -44,15 +32,6 @@ module.exports = {
                 test: /\.css$/i,
                 exclude: /styles\.css$/,
                 use: ["style-loader", "css-loader"],
-                // use: [
-                //     {
-                //         loader: MiniCssExtractPlugin.loader,
-                //         options: {
-                //             publicPath: "./",
-                //         },
-                //     },
-                //     "css-loader",
-                // ],
             },
 
             {
@@ -78,24 +57,6 @@ module.exports = {
             template: "./src/index.html",
             filename: "./index.html",
         }),
-        // new HtmlWebpackPlugin({
-        //     template: "./src/index.html",
-        //     filename: "./index.html",
-        //     chunks: ["js"],
-        //     hash: true,
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: "./src/index.html",
-        //     filename: "./react.html",
-        //     chunks: ["react"],
-        //     hash: true,
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: "./src/index.html",
-        //     filename: "./ts.html",
-        //     chunks: ["ts"],
-        //     hash: true,
-        // }),
         new MiniCssExtractPlugin({
             filename: "[name].[chunkhash].css",
             ignoreOrder: false,
