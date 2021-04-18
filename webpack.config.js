@@ -33,17 +33,11 @@ module.exports = {
                 exclude: /styles\.css$/,
                 use: ["style-loader", "css-loader"],
             },
-
             {
                 test: /\.(jpe?g|png|gif|svg|webp)$/i,
                 use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            esModule: false,
-                            name: "assets/[name].[ext]",
-                        },
-                    },
+                    "file-loader?name=assets/[name].[ext]",
+                    "image-webpack-loader",
                 ],
             },
             {

@@ -2,13 +2,17 @@ import '../css/componentes.css';
 
 
 
-export const saludar = ( nombre ) => {
+// export const saludar = ( nombre ) => {
 
-    console.log('Creando etiqueta h1, en el HTML!');
+//     console.log('Creando etiqueta h1, en el HTML!');
 
-    const h1 = document.createElement('h1');
-    h1.innerText = `Hola, ${ nombre }`;
+//     const h1 = document.createElement('h1');
+//     h1.innerText = `Hola, ${ nombre }`;
 
-    document.body.append( h1 );
+//     document.body.append( h1 );
 
+// }
+
+export const consola = () => {
+    console.log('Hola Mundo');
 }
