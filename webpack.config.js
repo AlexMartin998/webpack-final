@@ -4,25 +4,30 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"),
     CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
+    mode: "production",
+    entry: {
+        js: "./src/index.js",
+        react: "./src/index_react.js",
+        ts: "./src/index_ts.js",
+      },
     output: {
         filename: "[name].[chunkhash].js",
     },
 
-    mode: "production",
     module: {
         rules: [
-            // {
-            //     test: /\.jsx?$/i,
-            //     exclude: /node_modules/,
-            //     use: {
-            //         loader: "babel-loader",
-            //     },
-            // },
-            // {
-            //     test: /\.tsx?$/,
-            //     exclude: /node_modules/,
-            //     use: "ts-loader",
-            // },
+            {
+                test: /\.jsx?$/i,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                },
+            },
+            {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                use: "ts-loader",
+            },
             {
                 test: /\.html$/i,
                 use: [
@@ -35,11 +40,6 @@ module.exports = {
                     },
                 ],
             },
-            {
-                test: /styles\.css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
-            },
-
             {
                 test: /\.css$/i,
                 exclude: /styles\.css$/,
@@ -54,18 +54,25 @@ module.exports = {
                 //     "css-loader",
                 // ],
             },
-
+            {
+                test: /styles\.css$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
+            },
             {
                 test: /\.(jpe?g|png|gif|svg|webp)$/i,
                 use: [
-                    {
-                        loader: "file-loader",
-                        options: {
-                            esModule: false,
-                            name: "assets/[name].[ext]",
-                        },
-                    },
+                    "file-loader?name=assets/[name].[ext]",
+                    "image-webpack-loader",
                 ],
+                // use: [
+                //     {
+                //         loader: "file-loader",
+                //         options: {
+                //             esModule: false,
+                //             name: "assets/[name].[ext]",
+                //         },
+                //     },
+                // ],
             },
             {
                 test: /\.(woff)$/i,
@@ -74,28 +81,28 @@ module.exports = {
         ],
     },
     plugins: [
+        /* new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            filename: "./index.html",
+        }), */
         new HtmlWebpackPlugin({
             template: "./src/index.html",
             filename: "./index.html",
+            chunks: ["js"],
+            hash: true,
         }),
-        // new HtmlWebpackPlugin({
-        //     template: "./src/index.html",
-        //     filename: "./index.html",
-        //     chunks: ["js"],
-        //     hash: true,
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: "./src/index.html",
-        //     filename: "./react.html",
-        //     chunks: ["react"],
-        //     hash: true,
-        // }),
-        // new HtmlWebpackPlugin({
-        //     template: "./src/index.html",
-        //     filename: "./ts.html",
-        //     chunks: ["ts"],
-        //     hash: true,
-        // }),
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            filename: "./react.html",
+            chunks: ["react"],
+            hash: true,
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/index.html",
+            filename: "./ts.html",
+            chunks: ["ts"],
+            hash: true,
+        }),
         new MiniCssExtractPlugin({
             filename: "[name].[chunkhash].css",
             ignoreOrder: false,
