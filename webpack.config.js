@@ -3,12 +3,16 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"),
     CssMinimizerPlugin = require("css-minimizer-webpack-plugin"),
     CopyPlugin = require("copy-webpack-plugin");
 
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const path = require("path");
+
 module.exports = {
+    mode: "production",
     output: {
+        path: path.resolve(__dirname, "dist"),
         filename: "[name].[chunkhash].js",
     },
 
-    mode: "production",
     module: {
         rules: [
             {
@@ -24,14 +28,13 @@ module.exports = {
                 ],
             },
             {
-                test: /styles\.css$/,
-                use: [MiniCssExtractPlugin.loader, "css-loader"],
-            },
-
-            {
                 test: /\.css$/i,
                 exclude: /styles\.css$/,
                 use: ["style-loader", "css-loader"],
+            },
+            {
+                test: /styles\.css$/,
+                use: [MiniCssExtractPlugin.loader, "css-loader"],
             },
             {
                 test: /\.(jpe?g|png|gif|svg|webp)$/i,
@@ -59,5 +62,8 @@ module.exports = {
             patterns: [{ from: "src/assets", to: "assets" }],
         }),
         new CssMinimizerPlugin(),
+        new CleanWebpackPlugin({
+            cleanOnceBeforeBuildPatterns: [path.join(__dirname, "dist/**/*")],
+        }),
     ],
 };
