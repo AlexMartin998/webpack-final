@@ -5,6 +5,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin"),
 
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require("path");
+// const { SourceMapDevToolPlugin } = require("webpack");
+
 
 module.exports = {
     mode: "production",
@@ -15,6 +17,11 @@ module.exports = {
 
     module: {
         rules: [
+            {
+                test: /\.js$/,
+                enforce: 'pre',
+                use: ['source-map-loader'],
+              },
             {
                 test: /\.html$/i,
                 use: [
@@ -65,5 +72,8 @@ module.exports = {
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns: [path.join(__dirname, "dist/**/*")],
         }),
+        // new SourceMapDevToolPlugin({
+        //     filename: "[file].map"
+        //   }),
     ],
 };
